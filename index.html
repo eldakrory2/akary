@@ -94,6 +94,112 @@
     .gallery-btn:hover {
       background: rgba(255, 255, 255, 0.3);
     }
+    .container {
+            width: 100%;
+            height: 100vh;
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+        }
+
+        .content {
+            flex: 1;
+            color: #f5f5f5;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: linear-gradient(135deg, hsl(123, 95%, 32%), hsl(143, 85%, 35%));
+            z-index: 2;
+        }
+
+        /* نمط زر التواصل */
+        .contact-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #4CAF50;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 60px;
+            font-size: 24px;
+            z-index: 100;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        
+        .contact-btn:hover {
+            transform: scale(1.1);
+            background-color: #45a049;
+        }
+        
+        /* نمط نموذج الاتصال المعدل حسب الملف الأصلي */
+        .contact-form {
+            background: #f00303e6;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        
+        .contact-form h2 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 16rem;
+        }
+        
+        .contact-form input,
+        .contact-form select,
+        .contact-form textarea {
+            width: 70%;
+            color: #e0e0e0;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 20px;
+            color: #e0e0e0;
+            transition: all 0.3s;
+            background-color: hwb(272 0% 70% / 0.8);
+        }
+        
+        .contact-form input:focus,
+        .contact-form select:focus,
+        .contact-form textarea:focus {
+            border-color: hsl(0, 85%, 5%);
+            color: #e0e0e0;
+            outline: none;
+            box-shadow: 0 0 10px rgba(255,107,107,0.3);
+        }
+        h2{
+            text-align: center;
+            font-size: xx-large;
+        }
+        
+        .contact-form button {
+            background-color: #1f0202;
+            color: hsl(0, 17%, 94%);
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: bold;
+            transition: all 0.3s;
+            width: auto;
+            display: inline-block;
+        }
+        
+        .contact-form button:hover {
+            background-color: #ff5252;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
   </style>
 </head>
 <body>
@@ -104,6 +210,7 @@
 <nav>
   <a href="https://www.youtube.com/@ahmed-eldakrory">قناة اليوتيوب</a>
   <a href="https://www.facebook.com/profile.php?id=61569878923724">صفحة الفيس بوك</a>
+  <a href="#slide" >💾 تواصل معنا</a>
   <a href="#men">قسم التمليك</a>
   <a href="#women">قسم الإيجار الجديد</a>
   <a href="#kids">قسم الأراضي</a>
@@ -152,6 +259,39 @@
     <button onclick="downloadPDF()">📄 PDF</button>
   </div>
 </div>
+<section id="slide">
+  <div class="slide">
+    <div class="content">
+        <div class="contact-form-container">
+            <h2>تواصل معنا</h2>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <label for="name">الاسم الكامل</label>
+                    <input type="text" id="name" name="name" placeholder="أدخل اسمك الكامل" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">رقم الهاتف</label>
+                    <input type="tel" id="phone" name="phone" placeholder="أدخل رقم هاتفك" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject">الموضوع</label>
+                    <select id="subject" name="subject" required>
+                        <option value="">اختر موضوع الرسالة</option>
+                        <option value="استفسار">استفسار</option>
+                        <option value="طلب عرض">طلب عرض</option>
+                        <option value="شكوى">شكوى</option>
+                        <option value="اقتراح">اقتراح</option>
+                    </select>
+                </div> 
+                <button type="submit" class="submit-btn">إرسال الرسالة <i class="fas fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </div>
+    <div class="image-container">
+</div>
+</section>
 
 <script>
 let products = { men: [], women: [], kids: [] };
@@ -364,6 +504,27 @@ document.addEventListener('keydown', function(e) {
 });
 
 document.addEventListener('DOMContentLoaded', fetchProductsFromSheet);
+ // معالجة نموذج الاتصال - مطابق للملف الأصلي
+ document.getElementById("contactForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const data = new FormData(form);
+
+            fetch("https://script.google.com/macros/s/AKfycbxBbWZmKgRfp_ajFc0znyKeINqHOfN5iXrHKUat_2UtAIlE4fvxOH-Dxs8X7wd7iF90/exec", {
+                method: "POST",
+                body: data
+            })
+            .then(response => response.text())
+            .then(result => {
+                alert("✅ تم إرسال رسالتك بنجاح!");
+                form.reset();
+            })
+            .catch(error => {
+                alert("❌ حدث خطأ أثناء الإرسال، حاول لاحقًا.");
+                console.error(error);
+            });
+        });
 </script>
 
 </body>
